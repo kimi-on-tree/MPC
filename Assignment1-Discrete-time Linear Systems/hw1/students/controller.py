@@ -131,10 +131,12 @@ class Controller:
                   Set dt with 'set_sampling_time' method.")
         
         # todo: complete integral action and remove error
-        raise NotImplementedError("Integral action update not implemented yet")
+        # raise NotImplementedError("Integral action update not implemented yet")
         
-        self.i_term += # fill in the integral term 
-
+        x = x.reshape(2,1)
+        p_k = x[0,0]
+        p_ref = self.ref[0,0]
+        self.i_term += self.dt * (p_k - p_ref)
     def reset_integral(self):
         """
         Reset the integral action of the controller
@@ -177,8 +179,11 @@ class Controller:
         if self.use_integral is True:
             self.update_integral(x)
         
-        # todo: complete control law and remove error
-        raise NotImplementedError("Control law not implemented yet")
-    
-        u = # fill in the control law
+        # # todo: complete control law and remove error
+        # raise NotImplementedError("Control law not implemented yet")
+        x = x.reshape(2,1)
+        u = -self.L @ (x-self.ref)
+        if self.use_integral is True:
+            u = u - self.Ki * self.i_term
+            self.update_integral(x)
         return u

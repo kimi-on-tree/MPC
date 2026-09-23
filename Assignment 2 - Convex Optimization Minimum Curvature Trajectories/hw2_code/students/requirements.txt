@@ -1,0 +1,8 @@
+matplotlib
+casadi
+numpy==1.26.4
+control
+cvxpy
+mosek
+scipy
+pyyaml

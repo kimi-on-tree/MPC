@@ -67,16 +67,18 @@ class LinearCarModel:
         
         k = self.Lr / self.L
         
-        # TODO: set the system matrices A, B, C, D and remove error (vehicle properties are available under self.Lf, self.Lr, self.mass, self.max_acc, self.v_ref)
-        raise NotImplementedError("System matrices computation not implemented yet")
+        # # TODO: set the system matrices A, B, C, D and remove error (vehicle properties are available under self.Lf, self.Lr, self.mass, self.max_acc, self.v_ref)
+        # raise NotImplementedError("System matrices computation not implemented yet")
         
-        A = np.array()
+        A = np.array([[0.0,1.0],
+                      [0.0,0.0]])
         
-        B = np.array()
+        B = np.array([[0.0],
+                      [v_ref*k]])
         
-        C = np.array()
+        C = np.array([[1.0,0.0]])
 
-        D = np.array()
+        D = np.array([[0.0]])
 
         return A, B, C, D
     
@@ -92,8 +94,7 @@ class LinearCarModel:
         if self.Ad is None or self.Bd is None:
             raise ValueError("Discrete dynamics not set. Call c2d() first.")
         
-        return self.Ad, self.Bd, self.Cd, self.Dd
-    
+        return self.Ad, self.Bd, self.Cd, self.Dd   
 
     def c2d(self):
         """
@@ -117,7 +118,6 @@ class LinearCarModel:
         self.Bd = np.array ( Bd_list )
         self.Cd = np.array ( Cd_list )
         self.Dd = np.array ( Dd_list )
-    
 
     def set_discrete_dynamics(self, Ad, Bd):
         """
